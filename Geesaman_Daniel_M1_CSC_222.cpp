@@ -1,0 +1,111 @@
+// Geesaman_Daniel_M1_CSC_222.cpp : This file contains the 'main' function.
+//
+
+#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
+
+string studentNames[99];
+int studentGrades[99][99];
+double gradeAvg[99];
+char gradeLetter[99];
+string processingString;
+
+
+int fhandle(string studentNames[], int studentGrades[][99]);
+void calcAvg(int studentGrades[][99], int totalNames, double gradeAvg[]);
+void calcLtrGrade(double gradeAvg[], char gradeLetter[], int totalNames);
+void printReport(string studentNames[], char gradeLetter[], int totalNames);
+
+int main()
+{
+	int totalNames;
+	
+	totalNames = fhandle(studentNames, studentGrades);
+	calcAvg(studentGrades, totalNames, gradeAvg);
+	calcLtrGrade(gradeAvg, gradeLetter, totalNames);
+	/*printReport(studentNames, gradeLetter, totalNames);*/
+	for (int i = 0; i < 99; i++) {
+		cout << gradeLetter[i];
+	}
+	
+}
+
+int fhandle(string studentNames[], int studentGrades[][99])
+{
+	int names = 0;
+	fstream file;
+	file.open("StudentGrades.txt");
+	if (file.is_open())
+	{
+		while (not file.eof())
+		{
+			getline(file, processingString);
+			int pos = processingString.find(' ');
+			while (pos != string::npos)
+			{
+				int grades = 1;
+				studentNames[names] = processingString.substr(0, pos);
+				processingString.erase(0, pos + 1);
+				pos = processingString.find(' ');
+				while (pos != string::npos)
+				{
+					studentGrades[names][grades] = stoi(processingString.substr(0, pos));
+					processingString.erase(0, pos + 1);
+					pos = processingString.find(' ');
+					//cout << studentGrades[names][grades];
+					grades++;
+					if (pos == -1) {
+						studentGrades[names][grades] = stoi(processingString);
+						//cout << studentGrades[names][grades];
+					}
+				}
+				//cout << studentNames[names];
+				studentGrades[names][0] = grades;
+				names++;
+			}
+		}
+	}
+	else
+		cout << "file failed to open";
+
+	return names;
+}
+
+void calcAvg(int studentGrades[][99], int totalNames, double gradeAvg[])
+{
+	double total = 0;
+	for (int i = 0; i < totalNames; i++) {
+		total = 0;
+		for (int j = 1; j < 99; j++) {
+			total = total + studentGrades[i][j];
+		}
+		gradeAvg[i] = total / (studentGrades[i][0]);
+	}
+}
+
+void calcLtrGrade(double gradeAvg[], char gradeLetter[], int totalNames)
+{
+	for (int i = 0; i < totalNames; i++) {
+		if (90 <= gradeAvg[i])
+			gradeLetter[i] = 'A';
+		else if (80 <= gradeAvg[i] < 90)
+			gradeLetter[i] = 'B';
+		else if (70 <= gradeAvg[i] < 80)
+			gradeLetter[i] = 'C';
+		else if (60 <= gradeAvg[i] < 70)
+			gradeLetter[i] = 'D';
+		else
+			gradeLetter[i] = 'F';
+	}
+}
+
+void printReport(string studentNames[], char gradeLetter[], int totalNames)
+{
+	cout << "Student Letter Grades for your class:" << endl << endl;
+	for (int i = 0; i < totalNames; i++)
+	{
+		cout << studentNames[i] << ": " << gradeLetter[i] << endl;
+	}
+}
