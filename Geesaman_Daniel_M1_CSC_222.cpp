@@ -2,7 +2,6 @@
 #include <string>
 #include <random>
 #include <time.h>
-#include <stdio.h>
 using namespace std;
 
 int computerMove();
