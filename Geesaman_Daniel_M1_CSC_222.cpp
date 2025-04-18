@@ -21,15 +21,18 @@ void printReport(string studentNames[], char gradeLetter[], int totalNames);
 int main()
 {
 	int totalNames;
-	
+
 	totalNames = fhandle(studentNames, studentGrades);
 	calcAvg(studentGrades, totalNames, gradeAvg);
 	calcLtrGrade(gradeAvg, gradeLetter, totalNames);
-	/*printReport(studentNames, gradeLetter, totalNames);*/
+	printReport(studentNames, gradeLetter, totalNames);
+	/*
+	this is a data test loop
+
 	for (int i = 0; i < 99; i++) {
 		cout << gradeLetter[i];
-	}
-	
+	}*/
+	return 0;
 }
 
 int fhandle(string studentNames[], int studentGrades[][99])
@@ -88,14 +91,22 @@ void calcAvg(int studentGrades[][99], int totalNames, double gradeAvg[])
 void calcLtrGrade(double gradeAvg[], char gradeLetter[], int totalNames)
 {
 	for (int i = 0; i < totalNames; i++) {
-		if (90 <= gradeAvg[i])
+		if (90.0 <= gradeAvg[i])
+		{
 			gradeLetter[i] = 'A';
-		else if (80 <= gradeAvg[i] < 90)
+		}
+		else if (80.0 <= gradeAvg[i])
+		{
 			gradeLetter[i] = 'B';
-		else if (70 <= gradeAvg[i] < 80)
+		}
+		else if (70.0 <= gradeAvg[i])
+		{
 			gradeLetter[i] = 'C';
-		else if (60 <= gradeAvg[i] < 70)
+		}
+		else if (60.0 <= gradeAvg[i])
+		{
 			gradeLetter[i] = 'D';
+		}
 		else
 			gradeLetter[i] = 'F';
 	}
