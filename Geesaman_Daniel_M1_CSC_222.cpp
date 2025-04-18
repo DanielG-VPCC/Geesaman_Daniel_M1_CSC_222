@@ -88,6 +88,14 @@ void calcAvg(int studentGrades[][99], int totalNames, double gradeAvg[])
 	}
 }
 
+/*
+when calculating letter grades, I was a little unsure as to where to break the values because 
+the chart we were given in the instructions does not use inclusive values.
+
+I broke it up so that the letter grades are bounded by intervals of 10, I just wasn't sure if it should be 
+bounded on 59 69 79 89 as opposed to 60 70 80 90. 
+*/
+
 void calcLtrGrade(double gradeAvg[], char gradeLetter[], int totalNames)
 {
 	for (int i = 0; i < totalNames; i++) {
